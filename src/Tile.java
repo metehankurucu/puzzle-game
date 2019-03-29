@@ -7,17 +7,29 @@ public class Tile  extends ImageView {
     private double width = 200;
     private double onPressX = width/2;
     private double onPressY = height/2;
-    private boolean canMove;
+    private boolean canMove = false;
+    private boolean isEmpty = false;
+    private String name = "";
 
 
 
     public Tile(){
         //Initialize empty tile
+        isEmpty = true;
     }
 
-    public Tile(double x,double y,String fileName,boolean hasMove) {
-        super(new Image("file:///C:/Users/Lenovo/Desktop/Github/puzzle-game/src/tiles/" + fileName));
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "canMove=" + canMove +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public Tile(double x, double y, String name, String extension, boolean hasMove) {
+        super(new Image("file:///C:/Users/Lenovo/Desktop/Github/puzzle-game/src/tiles/" + name + extension));
         this.canMove = hasMove;
+        this.name = name;
         super.setX(x);
         super.setY(y);
         super.setFitHeight(height);
@@ -37,11 +49,19 @@ public class Tile  extends ImageView {
                 super.setY(event.getY() - onPressY);
             });
 
+        }else{
+
+
+
+
         }
     }
 
     public double getHeight() {
         return height;
+    }
+    public boolean isEmpty() {
+        return isEmpty;
     }
 
     public void setHeight(double height) {
