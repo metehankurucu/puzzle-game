@@ -1,6 +1,7 @@
 
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import sun.tools.java.Environment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +10,9 @@ import java.util.Scanner;
 
 
 public class Board extends Pane {
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir"));
+    }
     private ArrayList<Tile> tiles = new ArrayList<>();
     private double[][] rowColumns = {
             {0, 0, 20, 800},{800, 0, 20, 820},{0, 0, 800, 20},
@@ -25,7 +29,9 @@ public class Board extends Pane {
 
 
     private void placeByLevel(int level){
-        try (Scanner input = new Scanner(new File("C:/Users/Lenovo/Desktop/Github/puzzle-game/src/levels/level" + level + ".txt"))) {
+
+
+        try (Scanner input = new Scanner(new File(System.getProperty("user.dir") + "/src/levels/level" + level + ".txt"))) {
             boolean hasMove;
             while (input.hasNextLine()) {
                 hasMove = false;
