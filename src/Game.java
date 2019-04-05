@@ -14,7 +14,7 @@ public class Game extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        Board board = new Board(1);
+        Board board = new Board(5);
 
 
         Scene scene = new Scene(board,820,820);
