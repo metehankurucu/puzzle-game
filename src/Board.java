@@ -2,6 +2,7 @@
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import sun.tools.java.Environment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +11,9 @@ import java.util.Scanner;
 
 
 public class Board extends Pane {
-
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir"));
+    }
     private ArrayList<Tile> tiles = new ArrayList<>();
     private double[][] rowColumns = {
             {0 , 0 , 20 ,800},{800, 0, 20, 820},
@@ -28,6 +31,29 @@ public class Board extends Pane {
     };
 
 
+    private void placeByLevel(int level){
+
+
+        try (Scanner input = new Scanner(new File(System.getProperty("user.dir") + "/src/levels/level" + level + ".txt"))) {
+            boolean hasMove;
+            while (input.hasNextLine()) {
+                hasMove = false;
+                String[] words = (input.nextLine()).split(",");
+                int[] position = positions[Integer.parseInt(words[0]) - 1];
+                if(words[1].equals("Pipe") || words[2].equals("none")){
+                    hasMove = true;
+                }
+                if(words[2].equals("Free")){
+                    tiles.add(new Tile());
+                    continue;
+                }
+                String fileName = words[1] + words[2] + ".png";
+                tiles.add(new Tile(position[0], position[1], fileName,hasMove));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
 
