@@ -137,7 +137,7 @@ public class Board extends Pane {
     }
 
     private void placeByLevel(int level){
-        try (Scanner input = new Scanner(new File("C:/Users/Lenovo/Desktop/Github/puzzle-game/src/levels/level" + level + ".txt"))) {
+        try (Scanner input = new Scanner(new File(System.getProperty("user.dir") + "/src/levels/level" + level + ".txt"))) {
             boolean hasMove;
             while (input.hasNextLine()) {
                 hasMove = false;

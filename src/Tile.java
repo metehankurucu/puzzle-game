@@ -27,7 +27,7 @@ public class Tile  extends ImageView {
     }
 
     public Tile(double x, double y, String name, String extension, boolean hasMove) {
-        super(new Image("file:///C:/Users/Lenovo/Desktop/Github/puzzle-game/src/tiles/" + name + extension));
+        super(new Image("file:///" + System.getProperty("user.dir") + "/src/tiles/" + name + extension));
         this.canMove = hasMove;
         this.name = name;
         super.setX(x);
