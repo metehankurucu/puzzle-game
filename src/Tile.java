@@ -18,10 +18,6 @@ public class Tile  extends ImageView {
         isEmpty = true;
     }
 
-    
-
-
-    
     @Override
     public String toString() {
         return "Tile{" +
