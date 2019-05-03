@@ -1,7 +1,8 @@
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,45 +25,55 @@ public class Board extends Pane {
             {10, 10},{210, 10},{410, 10},{610, 10},
             {10,210},{210,210},{410,210},{610,210},
             {10,410},{210,410},{410,410},{610,410},
-            {10,610},{210,610},{410,607},{610,610}
+            {10,610},{210,610},{410,608},{610,610}
     };
+    private String [][] solution;
+    private Ball ball;
+    private PathElement[] animation ;
 
 
 
 
 
-    public Board(int level){
+    public Board(int level,String [][] solution,PathElement[] animation)
+    {
+        this.solution = solution;
+        this.animation = animation;
+
         drawBoard();
         placeByLevel(level);
         handleMoves();
-
+        this.ball = new Ball(90,80);
+        getChildren().add(this.ball);
     }
 
 
-    private void handleMoves(){
+    private void handleMoves()
+    {
         for(Tile tile:tiles){
            tile.setOnMouseReleased(event -> handleTileMove(tile,event));
         }
     }
 
 
-    private void changeArrayPositions(int firstPosition,int secondPosition){
+    private void changeArrayPositions(int firstPosition,int secondPosition)
+    {
         Tile firstTile = tiles.get(firstPosition);
         Tile secondTile = tiles.get(secondPosition);
         tiles.set(firstPosition,secondTile);
         tiles.set(secondPosition,firstTile);
     }
 
-
-
-    private void drawBoard () {
+    private void drawBoard ()
+    {
         for (double[] rectangle:rowColumns) {
             getChildren().add(new Rectangle(rectangle[0],rectangle[1],rectangle[2],rectangle[3]));
         }
     }
 
     //Return index of square that mouse on
-    private int determineSquare(double x,double y){
+    private int determineSquare(double x,double y)
+    {
         int startX,startY,endX,endY;
         int square = 0;
         for (int i = 0;i<positions.length;i++) {
@@ -76,12 +87,27 @@ public class Board extends Pane {
             }
         }
         return tiles.get(square).isEmpty()?square:-1;
-
-        //return square;
     }
 
 
-    private void handleTileMove(Tile tile, MouseEvent event){
+    private boolean checkSolved()
+    {
+        boolean solved = true;
+        for(String [] item:solution){
+            int position = Integer.parseInt(item[0]);
+            String value = item[1];
+            if(!((tiles.get(position)).getName()).equals(value)){
+                solved = false;
+            }
+        }
+        return solved;
+    }
+
+
+
+
+    private void handleTileMove(Tile tile, MouseEvent event)
+    {
         int finalI = tiles.indexOf(tile);
         if(!tile.isCanMove()){
             return;
@@ -124,7 +150,11 @@ public class Board extends Pane {
             }
 
             if(moved){
-                changeArrayPositions(finalI,square);
+                changeArrayPositions(finalI,square);//if move is invalid,change positions of tiles in array
+                if(checkSolved()){                    //then check is puzzle solved?
+                    animateBall();
+                    finish();
+                }
             }
 
         }else{//Back to normal position
@@ -136,7 +166,16 @@ public class Board extends Pane {
 
     }
 
-    private void placeByLevel(int level){
+    private void finish(){
+
+    }
+
+    private void animateBall  (){
+        this.ball.animate(this.animation,2);
+    }
+
+    private void placeByLevel(int level)
+    {
         try (Scanner input = new Scanner(new File(System.getProperty("user.dir") + "/src/levels/level" + level + ".txt"))) {
             boolean hasMove;
             while (input.hasNextLine()) {

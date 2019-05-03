@@ -1,49 +1,28 @@
 
+import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
 
-public class Tile  extends ImageView {
-    private double height = 200;
-    private double width = 200;
+public class Ball  extends ImageView {
+    private double height = 40;
+    private double width = 40;
     private double onPressX = width/2;
     private double onPressY = height/2;
-    private boolean canMove = false;
-    private boolean isEmpty = false;
-    private String name = "";
 
-    public String getName() {
-        return name;
-    }
 
-    public Tile(){
-        //Initialize empty tile
-        isEmpty = true;
-    }
-
-    @Override
-    public String toString() {
-        return "Tile{" +
-                "canMove=" + canMove +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    public Tile(double x, double y, String name, String extension, boolean hasMove) {
-        super(new Image("file:///" + System.getProperty("user.dir") + "/src/tiles/" + name + extension));
-        this.canMove = hasMove;
-        this.name = name;
+    public Ball(double x, double y) {
+        super(new Image("file:///" + System.getProperty("user.dir") + "/src/tiles/ball.png"));
         super.setX(x);
         super.setY(y);
         super.setFitHeight(height);
         super.setFitWidth(width);
         super.setPreserveRatio(true);
-        if (hasMove) {
+
             super.setOnMousePressed(event -> {
                 onPressX = event.getX() - super.getX();
                 onPressY = event.getY() - super.getY();
-                super.setFitHeight(height + 20);
-                super.setFitWidth(width + 20);
-
             });
 
             super.setOnMouseDragged(event -> {
@@ -51,19 +30,23 @@ public class Tile  extends ImageView {
                 super.setY(event.getY() - onPressY);
             });
 
-        }else{
+    }
 
-
-
-
+    protected void animate(PathElement paths[],int seconds){
+        Path animationPath = new Path();
+        for (PathElement path:paths) {
+            animationPath.getElements().add(path);
         }
+        PathTransition transition = new PathTransition();
+        transition.setNode(this);
+        transition.setDuration(Duration.seconds(seconds));
+        transition.setCycleCount(1);
+        transition.setPath(animationPath);
+        transition.play();
     }
 
     public double getHeight() {
         return height;
-    }
-    public boolean isEmpty() {
-        return isEmpty;
     }
 
     public void setHeight(double height) {
@@ -94,9 +77,6 @@ public class Tile  extends ImageView {
         this.onPressY = onPressY;
     }
 
-    public boolean isCanMove() {
-        return canMove;
-    }
 
 
 
