@@ -1,5 +1,9 @@
-
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -29,7 +33,8 @@ public class Board extends Pane {
     };
     private String [][] solution;
     private Ball ball;
-    private PathElement[] animation ;
+    private PathElement[] animation;
+    protected Button nextBtn = new Button("NEXT LEVEL");
 
 
 
@@ -45,6 +50,7 @@ public class Board extends Pane {
         handleMoves();
         this.ball = new Ball(90,80);
         getChildren().add(this.ball);
+        this.setBackground(new Background(new BackgroundFill(Color.rgb(73,73,73), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
 
@@ -153,7 +159,7 @@ public class Board extends Pane {
                 changeArrayPositions(finalI,square);//if move is invalid,change positions of tiles in array
                 if(checkSolved()){                    //then check is puzzle solved?
                     animateBall();
-                    finish();
+                    showNext();
                 }
             }
 
@@ -166,7 +172,15 @@ public class Board extends Pane {
 
     }
 
+
+    private void showNext(){
+        nextBtn.setLayoutY(getWidth()/2);
+        nextBtn.setLayoutX(getHeight()/2);
+        getChildren().add(nextBtn);
+    }
+
     private void finish(){
+
 
     }
 
@@ -202,10 +216,3 @@ public class Board extends Pane {
         }
     }
 }
-
-
-
-
-
-
-

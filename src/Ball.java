@@ -1,4 +1,3 @@
-
 import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,9 +7,6 @@ import javafx.util.Duration;
 public class Ball  extends ImageView {
     private double height = 40;
     private double width = 40;
-    private double onPressX = width/2;
-    private double onPressY = height/2;
-
 
     public Ball(double x, double y) {
         super(new Image("file:///" + System.getProperty("user.dir") + "/src/tiles/ball.png"));
@@ -19,17 +15,6 @@ public class Ball  extends ImageView {
         super.setFitHeight(height);
         super.setFitWidth(width);
         super.setPreserveRatio(true);
-
-            super.setOnMousePressed(event -> {
-                onPressX = event.getX() - super.getX();
-                onPressY = event.getY() - super.getY();
-            });
-
-            super.setOnMouseDragged(event -> {
-                super.setX(event.getX() - onPressX);
-                super.setY(event.getY() - onPressY);
-            });
-
     }
 
     protected void animate(PathElement paths[],int seconds){
@@ -60,26 +45,4 @@ public class Ball  extends ImageView {
     public void setWidth(double width) {
         this.width = width;
     }
-
-    public double getOnPressX() {
-        return onPressX;
-    }
-
-    public void setOnPressX(double onPressX) {
-        this.onPressX = onPressX;
-    }
-
-    public double getOnPressY() {
-        return onPressY;
-    }
-
-    public void setOnPressY(double onPressY) {
-        this.onPressY = onPressY;
-    }
-
-
-
-
-
-
 }
