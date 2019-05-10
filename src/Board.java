@@ -1,5 +1,4 @@
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -34,9 +33,8 @@ public class Board extends Pane {
     private String [][] solution;
     private Ball ball;
     private PathElement[] animation;
-    protected Button nextBtn = new Button("NEXT LEVEL");
-
-
+    protected Button backBtn = new Button(250,410,70,70,"back");
+    protected Button nextBtn = new Button(350,410,70,196,"next");
 
 
 
@@ -174,9 +172,7 @@ public class Board extends Pane {
 
 
     private void showNext(){
-        nextBtn.setLayoutY(getWidth()/2);
-        nextBtn.setLayoutX(getHeight()/2);
-        getChildren().add(nextBtn);
+        getChildren().addAll(nextBtn,backBtn);
     }
 
     private void finish(){

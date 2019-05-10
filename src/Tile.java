@@ -43,25 +43,18 @@ public class Tile  extends ImageView {
                 onPressY = event.getY() - super.getY();
                 super.setFitHeight(height + 20);
                 super.setFitWidth(width + 20);
-
             });
-
             super.setOnMouseDragged(event -> {
                 super.setX(event.getX() - onPressX);
                 super.setY(event.getY() - onPressY);
             });
-
-        }else{
-
-
-
-
         }
     }
 
     public double getHeight() {
         return height;
     }
+
     public boolean isEmpty() {
         return isEmpty;
     }
@@ -97,9 +90,5 @@ public class Tile  extends ImageView {
     public boolean isCanMove() {
         return canMove;
     }
-
-
-
-
 
 }

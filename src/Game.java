@@ -58,11 +58,11 @@ public class Game extends Application {
     };
 
     private int[] animationIndexes = {0,0,0,1,1}; // indexes of animationPaths, which level in which index of animationPaths
-
     private int level = 4;
-    private boolean levelSelected = false;
     private Stage screen;
-
+    private StartingScreen startingScreen;
+    //Level status of game according to user(solved -> true,not solved -> false)
+    private boolean[] levelStatus = {false,false,false,false,false};
 
     public static void main(String[] args) {
         launch(args);
@@ -71,36 +71,52 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.screen = primaryStage;
+        switchToStart(true);
+    }
 
-
+    private void switchToStart(boolean initial){
         // Start Scene for choosing level
-        StartingScreen starting = new StartingScreen();
-        Button btn1 = new Button("1");
-        btn1.setLayoutX(200);
-        btn1.setLayoutY(200);
-
-        starting.getChildren().add(btn1);
-        Scene startScene = new Scene(starting,820,820);
-        starting.setVisible(true);
-        screen.setResizable(true);
+        startingScreen = new StartingScreen();
+        Scene startScene = new Scene(startingScreen,820,820);
+        startingScreen.setVisible(true);
+        screen.setResizable(false);
         startScene.setFill(Color.rgb(73,73,73));
         screen.setTitle("Puzzle Game");
-
         screen.setScene(startScene);
         screen.show();
+        if(!initial){
+            startingScreen.setButtonTypes(levelStatus);
+            startingScreen.setButtonsVisible(false);
+        }
+        this.handleLevelButtons();
 
-        btn1.setOnAction(e -> {
-            this.levelSelected = true;
-            this.level = 1;
-            this.switchToGame();
-        });
-
-
-
+    }
 
 
 
+    private void handleLevelButtons(){
+        //Every level button handled by foreach loop
+        for (LevelButton btn:startingScreen.getButtons()) {
+            btn.setOnMouseClicked(event -> {
+                //Only will solve 1. level or next one from last solved
+                if(getLastSolved() + 2 >= btn.getLevel()){
+                    this.level = btn.getLevel();
+                    this.switchToGame();
+                }
 
+            });
+        }
+    }
+
+    //Return index of last solved level or if does not solved return index 0
+    private int getLastSolved(){
+        int index = -1;
+        for (int i = 0;i<levelStatus.length;i++) {
+            if(levelStatus[i]){
+                index = i;
+            }
+        }
+        return index;
     }
 
 
@@ -114,21 +130,15 @@ public class Game extends Application {
         board.setVisible(true);
         gameScene.setFill(Color.rgb(73,73,73));
         screen.setScene(gameScene);
-        board.nextBtn.setOnAction(event -> {
+        board.nextBtn.setOnMouseClicked(event -> {
+            this.levelStatus[level - 1] = true;
             this.level++;
             switchToGame();
         });
+        board.backBtn.setOnMouseClicked(event -> {
+            this.levelStatus[level - 1] = true;
+            switchToStart(false);
+        });
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
