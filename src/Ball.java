@@ -7,7 +7,7 @@ import javafx.util.Duration;
 public class Ball  extends ImageView {
     private double height = 40;
     private double width = 40;
-
+    //Initialize Ball
     public Ball(double x, double y) {
         super(new Image("file:///" + System.getProperty("user.dir") + "/src/tiles/ball.png"));
         super.setX(x);
@@ -16,8 +16,8 @@ public class Ball  extends ImageView {
         super.setFitWidth(width);
         super.setPreserveRatio(true);
     }
-
-    protected void animate(PathElement paths[],int seconds){
+    //Create path and play transition animation
+    public void animate(PathElement paths[],int seconds){
         Path animationPath = new Path();
         for (PathElement path:paths) {
             animationPath.getElements().add(path);

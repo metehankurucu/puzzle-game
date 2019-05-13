@@ -1,4 +1,3 @@
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -11,9 +10,7 @@ public class Tile  extends ImageView {
     private boolean isEmpty = false;
     private String name = "";
 
-    public String getName() {
-        return name;
-    }
+
 
     public Tile(){
         //Initialize empty tile
@@ -27,7 +24,7 @@ public class Tile  extends ImageView {
                 ", name='" + name + '\'' +
                 '}';
     }
-
+    //According to given x,y,name,extension and moving status; initialize tile
     public Tile(double x, double y, String name, String extension, boolean hasMove) {
         super(new Image("file:///" + System.getProperty("user.dir") + "/src/tiles/" + name + extension));
         this.canMove = hasMove;
@@ -38,17 +35,22 @@ public class Tile  extends ImageView {
         super.setFitWidth(width);
         super.setPreserveRatio(true);
         if (hasMove) {
+            //when pressed get bigger 20 pixel
             super.setOnMousePressed(event -> {
                 onPressX = event.getX() - super.getX();
                 onPressY = event.getY() - super.getY();
                 super.setFitHeight(height + 20);
                 super.setFitWidth(width + 20);
             });
+            //Drag Functionality(according to pressed part of tile,minus pressed coordinates )
             super.setOnMouseDragged(event -> {
                 super.setX(event.getX() - onPressX);
                 super.setY(event.getY() - onPressY);
             });
         }
+    }
+    public String getName() {
+        return name;
     }
 
     public double getHeight() {

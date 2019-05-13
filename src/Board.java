@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class Board extends Pane {
 
     private ArrayList<Tile> tiles = new ArrayList<>();
+    //Positions of black rows and columns
     private double[][] rowColumns = {
             {0 , 0 , 20 ,800},{800, 0, 20, 820},
             {0 , 0 ,800 , 20},{0, 800, 800, 20},
@@ -23,7 +24,7 @@ public class Board extends Pane {
             {600, 0, 20, 865},{0, 200, 865, 20},
             {0, 400, 865, 20},{0, 600, 865, 20}
     };
-
+    //Positions of each tile according to index
     private int[][] positions = {
             {10, 10},{210, 10},{410, 10},{610, 10},
             {10,210},{210,210},{410,210},{610,210},
@@ -35,14 +36,14 @@ public class Board extends Pane {
     private PathElement[] animation;
     protected Button backBtn = new Button(250,410,70,70,"back");
     protected Button nextBtn = new Button(350,410,70,196,"next");
+    private int level;
 
-
-
+    //Constructor with given level,solution and its animation path
     public Board(int level,String [][] solution,PathElement[] animation)
     {
         this.solution = solution;
         this.animation = animation;
-
+        this.level = level;
         drawBoard();
         placeByLevel(level);
         handleMoves();
@@ -51,7 +52,7 @@ public class Board extends Pane {
         this.setBackground(new Background(new BackgroundFill(Color.rgb(73,73,73), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
-
+    //handle each tile when released
     private void handleMoves()
     {
         for(Tile tile:tiles){
@@ -59,7 +60,7 @@ public class Board extends Pane {
         }
     }
 
-
+    //Change positions in array of tiles which exchange
     private void changeArrayPositions(int firstPosition,int secondPosition)
     {
         Tile firstTile = tiles.get(firstPosition);
@@ -67,7 +68,7 @@ public class Board extends Pane {
         tiles.set(firstPosition,secondTile);
         tiles.set(secondPosition,firstTile);
     }
-
+    //Draw board by rowColums
     private void drawBoard ()
     {
         for (double[] rectangle:rowColumns) {
@@ -93,7 +94,7 @@ public class Board extends Pane {
         return tiles.get(square).isEmpty()?square:-1;
     }
 
-
+    //Control for Solved
     private boolean checkSolved()
     {
         boolean solved = true;
@@ -170,20 +171,21 @@ public class Board extends Pane {
 
     }
 
-
+    //Show buttons for next level or start screen
     private void showNext(){
-        getChildren().addAll(nextBtn,backBtn);
-    }
-
-    private void finish(){
-
-
+        if(level != 5){
+            getChildren().add(nextBtn);
+        }else{
+            backBtn.setX(350);
+        }
+        getChildren().add(backBtn);
     }
 
     private void animateBall  (){
         this.ball.animate(this.animation,2);
     }
 
+    //placed tiles according to level (with txt file)
     private void placeByLevel(int level)
     {
         try (Scanner input = new Scanner(new File(System.getProperty("user.dir") + "/src/levels/level" + level + ".txt"))) {

@@ -1,11 +1,11 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 
 public class Game extends Application {
+    //solutions of level (by index)
     private String [][][] solutions = {
             {
                     {"4","PipeVertical"},
@@ -58,7 +58,7 @@ public class Game extends Application {
     };
 
     private int[] animationIndexes = {0,0,0,1,1}; // indexes of animationPaths, which level in which index of animationPaths
-    private int level = 4;
+    private int level = 1;
     private Stage screen;
     private StartingScreen startingScreen;
     //Level status of game according to user(solved -> true,not solved -> false)

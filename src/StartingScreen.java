@@ -1,7 +1,5 @@
-import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -14,7 +12,6 @@ public class StartingScreen extends Pane {
 
 
     public StartingScreen(){
-
         //Background Of Starting Screen
         this.setBackground(
                 new Background(
@@ -33,7 +30,6 @@ public class StartingScreen extends Pane {
                         )
                 )
         );
-
         getChildren().addAll(startBtn,backBtn);
         initializeButtons();
         setUI(false);
@@ -57,7 +53,7 @@ public class StartingScreen extends Pane {
             buttons.add(new LevelButton(x,y ,70,70,i,false));
         }
     }
-
+    //Set or Add to Pane
     public void setUI(boolean set){
         for (int i  = 0;i<buttons.size();i++){
             if(set){getChildren().set(i,buttons.get(i));}
@@ -70,6 +66,7 @@ public class StartingScreen extends Pane {
         return buttonsVisible;
     }
 
+    //Set visible of buttons
     public void setButtonsVisible(boolean buttonsVisible) {
         this.buttonsVisible = buttonsVisible;
         for (LevelButton btn:buttons){
@@ -91,6 +88,7 @@ public class StartingScreen extends Pane {
         return buttonTypes;
     }
 
+    //When a level is solved,change it with dark button
     public void setButtonTypes(boolean[] buttonTypes) {
         this.buttonTypes = buttonTypes;
         for (int i = 0;i<buttonTypes.length;i++){

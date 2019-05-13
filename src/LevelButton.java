@@ -5,7 +5,7 @@ public class LevelButton  extends Button {
     private boolean type;
 
 
-
+    //Level Button uses Button constructor for x,y,height,width
     public LevelButton(double x, double y, double height, double width, int level, boolean type) {
         super(x,y,height,width,new Image("file:///" + System.getProperty("user.dir") + "/src/images/level" + level + (type?"done":"") + ".png"));
         this.level = level;
